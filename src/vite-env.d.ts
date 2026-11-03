@@ -27,6 +27,7 @@ declare module 'lucide-react' {
   export const Utensils: LucideIcon;
   export const UtensilsCrossed: LucideIcon;
   export const ChefHat: LucideIcon;
+  export const ExternalLink: LucideIcon;
   export const CheckCircle: LucideIcon;
   export const ArrowRight: LucideIcon;
   export const Eye: LucideIcon;
@@ -47,4 +48,16 @@ declare module 'lucide-react' {
   export const LogOut: LucideIcon;
   const icons: { [key: string]: LucideIcon };
   export default icons;
+}
+
+declare module 'firebase/firestore' {
+  export function getFirestore(app?: any): any;
+  export function doc(firestore: any, path: string, ...pathSegments: string[]): any;
+  export function getDoc(reference: any): Promise<any>;
+  export function setDoc(reference: any, data: any, options?: any): Promise<void>;
+  export function updateDoc(reference: any, data: any): Promise<void>;
+  export function collection(firestore: any, path: string, ...pathSegments: string[]): any;
+  export function query(collection: any, ...queryConstraints: any[]): any;
+  export function where(fieldPath: string, opStr: string, value: any): any;
+  export function getDocs(query: any): Promise<any>;
 }

@@ -15,13 +15,21 @@ import { AlternativesPage } from './features/alternativas/AlternativesPage';
 import { WeeklyPlannerPage } from './features/planner/WeeklyPlannerPage';
 import { HistoryPage } from './features/history/HistoryPage';
 import { SettingsPage } from './features/settings/SettingsPage';
+import { PaywallBlockPage } from './features/subscription/PaywallBlockPage';
 
-// Route Guard for authenticated screens
+// Route Guard for authenticated & active subscription screens
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, subscription } = useAuth();
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
+
+  // If 30-day access has expired or is blocked, redirect to the paywall renewal screen
+  if (subscription.isBlocked) {
+    return <Navigate to="/bloqueado" replace />;
+  }
+
   return <>{children}</>;
 };
 
@@ -35,6 +43,7 @@ export const AppContent: React.FC = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/cadastro" element={<AuthPage />} />
+          <Route path="/bloqueado" element={<PaywallBlockPage />} />
 
           {/* Onboarding */}
           <Route 

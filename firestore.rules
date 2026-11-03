@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Perfil do Usuário (Mamãe/Responsável)
+    // Cada usuário só pode ler e editar seus próprios dados
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // 2. Assinaturas e Liberação Hotmart
+    // O usuário autenticado só pode consultar se o e-mail bater com o seu
+    // Apenas o Webhook do Google Apps Script pode criar/atualizar com a chave secreta
+    match /subscriptions/{email} {
+      allow read: if request.auth != null && 
+                     request.auth.token.email != null && 
+                     request.auth.token.email.lower() == email.lower();
+      
+      // Chave de segurança para o Webhook do Google Apps Script
+      allow write: if request.resource.data.secretKey == "MAPA_ALIMENTAR_SECURE_2026";
+    }
+    
+    // 3. Perfis dos Filhos e preferências sensoriais
+    match /children/{childId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // 4. Cardápios Semanais gerados
+    match /meal_plans/{planId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // 5. Catálogo de Alimentos e Pratos Típicos (leitura pública para o app)
+    match /catalog/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
