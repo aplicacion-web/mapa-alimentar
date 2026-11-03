@@ -45,6 +45,11 @@ interface DataContextType {
   removeMealPlanItem: (id: string) => void;
 
   addExperience: (foodId: string, status: ExperienceStatus, notes?: string) => void;
+  addNewCustomFood: (
+    foodData: Partial<FoodItem> & { nameEsMx: string; category: FoodItem['category'] },
+    status?: FoodStatus,
+    preparation?: string
+  ) => FoodItem;
   resetAll: () => void;
 }
 
@@ -56,7 +61,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [childFoods, setChildFoods] = useState<ChildFoodEntry[]>(LocalStore.getChildFoods());
   const [mealPlan, setMealPlan] = useState<MealPlanEntry[]>(LocalStore.getMealPlan());
   const [experiences, setExperiences] = useState<FoodExperienceEntry[]>(LocalStore.getExperiences());
-  const [catalog] = useState<FoodItem[]>(MEXICAN_FOODS_CATALOG);
+  const [catalog, setCatalog] = useState<FoodItem[]>(() => [
+    ...LocalStore.getCustomFoods(),
+    ...MEXICAN_FOODS_CATALOG
+  ]);
   const [preparedDishes] = useState<PreparedDishPreset[]>(MEXICAN_PREPARED_DISHES);
 
   const findFoodById = (foodId: string) => {
@@ -301,6 +309,45 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     LocalStore.setExperiences(updated);
   };
 
+  const addNewCustomFood = (
+    foodData: Partial<FoodItem> & { nameEsMx: string; category: FoodItem['category'] },
+    status: FoodStatus = 'accepted',
+    preparation?: string
+  ): FoodItem => {
+    const defaultPrep = preparation || foodData.preparation || 'Cocinada al gusto en casa';
+    const id = `custom-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+    const newFood: FoodItem = {
+      id,
+      slug: `custom-${foodData.nameEsMx.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+      nameEsMx: foodData.nameEsMx.trim(),
+      category: foodData.category,
+      preparation: defaultPrep,
+      availablePreparations: foodData.availablePreparations || [defaultPrep, 'Al vapor', 'Cocida', 'A la plancha', 'Al natural'],
+      textureTags: foodData.textureTags || ['suave'],
+      colorTags: foodData.colorTags || ['blanco'],
+      shapeTags: foodData.shapeTags || ['cubos'],
+      temperatureTags: foodData.temperatureTags || ['tibio'],
+      allergens: foodData.allergens || [],
+      allergensKnown: true,
+      nutrition: {
+        basisGrams: 100,
+        sourceName: 'Alimento registrado por la familia'
+      },
+      notes: 'Alimento agregado a la lista familiar'
+    };
+
+    // 1. Save to custom storage & catalog
+    const existingCustoms = LocalStore.getCustomFoods();
+    const updatedCustoms = [newFood, ...existingCustoms];
+    LocalStore.setCustomFoods(updatedCustoms);
+    setCatalog(prev => [newFood, ...prev]);
+
+    // 2. Automatically register in child's food status (e.g. accepted "Ya come")
+    setFoodStatus(newFood.id, status, undefined, defaultPrep);
+
+    return newFood;
+  };
+
   const resetAll = () => {
     LocalStore.clearAllData();
     setChild(LocalStore.getChild());
@@ -308,6 +355,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setChildFoods(LocalStore.getChildFoods());
     setMealPlan(LocalStore.getMealPlan());
     setExperiences(LocalStore.getExperiences());
+    setCatalog(MEXICAN_FOODS_CATALOG);
   };
 
   const acceptedIds = new Set(childFoods.filter(c => c.status === 'accepted').map(c => c.foodId));
@@ -343,6 +391,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         generateWeeklyPlanAutomatically,
         removeMealPlanItem,
         addExperience,
+        addNewCustomFood,
         resetAll
       }}
     >

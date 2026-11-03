@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
-import { ShieldAlert, Sparkles, CheckCircle2, XCircle, Calendar, Edit3, ChefHat } from 'lucide-react';
+import { ShieldAlert, Sparkles, CheckCircle2, XCircle, Calendar, Edit3, ChefHat, Plus, Compass } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DisclaimerBanner } from '../../components/DisclaimerBanner';
+import { AddCustomFoodModal } from '../../components/AddCustomFoodModal';
+import { FoodStatus } from '../../data/types';
 
 export const ProfilePage: React.FC = () => {
   const { child, acceptedFoods, avoidedFoods, exploringFoods, getFoodPreparation, updateChildProfile } = useData();
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [nicknameInput, setNicknameInput] = useState(child.nickname);
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [modalDefaultStatus, setModalDefaultStatus] = useState<FoodStatus>('accepted');
+
+  const handleOpenAddModal = (status: FoodStatus) => {
+    setModalDefaultStatus(status);
+    setIsAddModalOpen(true);
+  };
 
   const handleSaveNickname = () => {
     if (nicknameInput.trim()) {
@@ -135,6 +145,23 @@ export const ProfilePage: React.FC = () => {
             Aún no has marcado alimentos que ya come.
           </p>
         )}
+        {/* Botones de acción rápida para agregar más alimentos */}
+        <div className="pt-2 border-t border-slate-100 flex items-center gap-2">
+          <Link
+            to="/app/mapa"
+            className="flex-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[11px] font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors border border-emerald-200"
+          >
+            <Compass className="w-3.5 h-3.5 text-emerald-700" />
+            <span>Ver catálogo ({acceptedFoods.length} activos)</span>
+          </Link>
+          <button
+            onClick={() => handleOpenAddModal('accepted')}
+            className="flex-1 bg-brand-600 hover:bg-brand-700 text-white text-[11px] font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm transition-all"
+          >
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>+ Crear alimento nuevo</span>
+          </button>
+        </div>
       </div>
 
       {/* 2. Alimentos que quiero testear / probar suavemente */}
@@ -229,6 +256,12 @@ export const ProfilePage: React.FC = () => {
       </div>
 
       <DisclaimerBanner compact />
+
+      <AddCustomFoodModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        defaultStatus={modalDefaultStatus}
+      />
     </div>
   );
 };

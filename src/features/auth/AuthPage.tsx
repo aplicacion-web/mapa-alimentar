@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Heart, Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
+import { InstallAppButton } from '../../components/InstallAppButton';
 
 export const AuthPage: React.FC = () => {
   const location = useLocation();
@@ -164,6 +165,9 @@ export const AuthPage: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Botón de instalación de la app para PC y Móvil */}
+        <InstallAppButton />
 
         <p className="text-center text-xs text-slate-500">
           {isCadastro ? (

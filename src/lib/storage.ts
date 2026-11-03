@@ -24,7 +24,8 @@ const STORAGE_KEYS = {
   CHILD_FOODS: 'mapa_child_foods',
   MEAL_PLAN: 'mapa_meal_plan',
   EXPERIENCES: 'mapa_food_experiences',
-  ONBOARDING_DONE: 'mapa_onboarding_completed'
+  ONBOARDING_DONE: 'mapa_onboarding_completed',
+  CUSTOM_FOODS: 'mapa_custom_foods'
 };
 
 const INITIAL_DEMO_CHILD: ChildProfile = {
@@ -204,6 +205,19 @@ export const LocalStore = {
   },
   setExperiences(entries: FoodExperienceEntry[]) {
     localStorage.setItem(STORAGE_KEYS.EXPERIENCES, JSON.stringify(entries));
+  },
+
+  getCustomFoods(): FoodItem[] {
+    const raw = localStorage.getItem(STORAGE_KEYS.CUSTOM_FOODS);
+    if (!raw) return [];
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return [];
+    }
+  },
+  setCustomFoods(foods: FoodItem[]) {
+    localStorage.setItem(STORAGE_KEYS.CUSTOM_FOODS, JSON.stringify(foods));
   },
 
   clearAllData() {

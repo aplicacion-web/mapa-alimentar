@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
 import { MealPlanEntry, MealSlot, FoodItem, MealPlateItem, PreparedDishPreset } from '../../data/types';
 import { calculateAlternatives } from '../../lib/alternativesEngine';
@@ -141,6 +142,17 @@ export const WeeklyPlannerPage: React.FC = () => {
           <Sparkles className="w-4 h-4 text-slate-950 fill-slate-950" />
           <span>✨ Generar menú de la semana con platos típicos</span>
         </button>
+
+        {/* Shortcut to add/manage foods */}
+        <div className="pt-1 flex items-center justify-between text-[11px] text-teal-200">
+          <span>¿Olvidaste algún alimento?</span>
+          <Link
+            to="/app/mapa"
+            className="text-white hover:text-teal-200 font-bold underline flex items-center gap-1"
+          >
+            <span>+ Agregar alimentos que come</span>
+          </Link>
+        </div>
       </div>
 
       {/* Days Selector (Horizontal Tabs) */}
