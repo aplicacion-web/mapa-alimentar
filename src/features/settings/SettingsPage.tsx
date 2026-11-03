@@ -4,6 +4,7 @@ import { useData } from '../../context/DataContext';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Trash2, LogOut, Download, Check, AlertTriangle, RefreshCw, Heart } from 'lucide-react';
 import { DisclaimerBanner } from '../../components/DisclaimerBanner';
+import { InstallAppButton } from '../../components/InstallAppButton';
 
 export const SettingsPage: React.FC = () => {
   const { user, logout, deleteAccount } = useAuth();
@@ -67,6 +68,9 @@ export const SettingsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* PWA Install Card */}
+      <InstallAppButton />
 
       {/* Data Sovereignty & Export */}
       <div className="bg-white rounded-3xl p-4 border border-slate-200/90 shadow-sm space-y-3">

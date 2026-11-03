@@ -44,6 +44,8 @@ declare module 'lucide-react' {
   export const Clock: LucideIcon;
   export const Slash: LucideIcon;
   export const Download: LucideIcon;
+  export const Monitor: LucideIcon;
+  export const Smartphone: LucideIcon;
   export const Shield: LucideIcon;
   export const LogOut: LucideIcon;
   const icons: { [key: string]: LucideIcon };

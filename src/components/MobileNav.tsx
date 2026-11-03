@@ -5,8 +5,8 @@ import { User, Compass, Sparkles, Calendar, History } from 'lucide-react';
 export const MobileNav: React.FC = () => {
   const location = useLocation();
 
-  // Hide bottom nav on landing, auth and onboarding
-  if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/cadastro' || location.pathname === '/onboarding') {
+  // Hide bottom nav on landing, auth, onboarding and paywall
+  if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/cadastro' || location.pathname === '/onboarding' || location.pathname === '/bloqueado') {
     return null;
   }
 

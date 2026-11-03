@@ -7,8 +7,8 @@ export const Navbar: React.FC = () => {
   const { child } = useData();
   const location = useLocation();
 
-  // Don't show app navbar on landing or full auth screens
-  if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/cadastro' || location.pathname === '/onboarding') {
+  // Don't show app navbar on landing, login or paywall screens
+  if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/cadastro' || location.pathname === '/onboarding' || location.pathname === '/bloqueado') {
     return null;
   }
 

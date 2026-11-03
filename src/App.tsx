@@ -33,14 +33,28 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
+// Root Entry Handler: Redirects authenticated users directly to their meal planner, or shows the login screen
+const RootScreen: React.FC = () => {
+  const { isAuthenticated, subscription } = useAuth();
+  
+  if (isAuthenticated) {
+    if (subscription.isBlocked) {
+      return <Navigate to="/bloqueado" replace />;
+    }
+    return <Navigate to="/app/rotina" replace />;
+  }
+
+  return <AuthPage />;
+};
+
 export const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
       <Navbar />
       <main className="flex-1">
         <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
+          {/* Default entry goes directly to Login (or App if already logged in) */}
+          <Route path="/" element={<RootScreen />} />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/cadastro" element={<AuthPage />} />
           <Route path="/bloqueado" element={<PaywallBlockPage />} />
