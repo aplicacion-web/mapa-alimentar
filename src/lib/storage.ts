@@ -123,18 +123,13 @@ export const LocalStore = {
   getUser(): UserAccount | null {
     const raw = localStorage.getItem(STORAGE_KEYS.USER);
     if (!raw) {
-      const demoUser: UserAccount = {
-        id: 'user-demo-1',
-        email: 'mama.sofia@ejemplo.mx',
-        name: 'Mamá de Sofía',
-        country: 'México',
-        locale: 'es-MX',
-        consentAt: new Date().toISOString()
-      };
-      this.setUser(demoUser);
-      return demoUser;
+      return null;
     }
-    return JSON.parse(raw);
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
   },
   setUser(user: UserAccount | null) {
     if (!user) {

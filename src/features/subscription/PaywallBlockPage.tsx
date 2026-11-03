@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Lock, Sparkles, CheckCircle2, RefreshCw, LogOut, ShieldAlert, Heart, ExternalLink } from 'lucide-react';
 import { DisclaimerBanner } from '../../components/DisclaimerBanner';
 
 export const PaywallBlockPage: React.FC = () => {
+  const navigate = useNavigate();
   const { user, subscription, checkSubscriptionStatus, logout } = useAuth();
   const [checking, setChecking] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -19,7 +21,7 @@ export const PaywallBlockPage: React.FC = () => {
       if (active) {
         setFeedback('¡Pago confirmado! Tu acceso está activo. Redirigiendo...');
         setTimeout(() => {
-          window.location.href = '/app/mapa';
+          navigate('/app/mapa');
         }, 1200);
       } else {
         setFeedback('Aún no detectamos la confirmación del pago. Si acabas de pagar en Hotmart, puede tardar 1 a 2 minutos.');

@@ -70,7 +70,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Listen to Firebase Auth state
   useEffect(() => {
+    let isMounted = true;
+
+    // Safety timeout: Never leave the user stuck on loading spinner for more than 1.5 seconds if Firebase Auth is slow or offline
+    const timer = setTimeout(() => {
+      if (isMounted) {
+        setLoading(false);
+      }
+    }, 1500);
+
     const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+      if (!isMounted) return;
       setFirebaseUser(fbUser);
       if (fbUser) {
         try {
@@ -148,10 +158,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(local);
         setSubscription(calculateSubscription());
       }
-      setLoading(false);
+      if (isMounted) {
+        setLoading(false);
+        clearTimeout(timer);
+      }
+    }, (err) => {
+      console.warn('Firebase Auth state error:', err);
+      if (isMounted) {
+        const local = LocalStore.getUser();
+        setUser(local);
+        setSubscription(calculateSubscription());
+        setLoading(false);
+        clearTimeout(timer);
+      }
     });
 
-    return () => unsubscribe();
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+      unsubscribe();
+    };
   }, []);
 
   const login = async (email: string, password?: string) => {
