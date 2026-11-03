@@ -68,6 +68,9 @@ export const AuthPage: React.FC = () => {
           </p>
         </div>
 
+        {/* Botón de instalación PWA destacado en la pantalla de inicio */}
+        <InstallAppButton />
+
         {/* Card */}
         <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm space-y-5">
           {error && (
@@ -165,9 +168,6 @@ export const AuthPage: React.FC = () => {
             </button>
           </div>
         </div>
-
-        {/* Botón de instalación de la app para PC y Móvil */}
-        <InstallAppButton />
 
         <p className="text-center text-xs text-slate-500">
           {isCadastro ? (

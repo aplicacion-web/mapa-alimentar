@@ -1,9 +1,12 @@
-// Basic Service Worker for Mapa Alimentar PWA
-const CACHE_NAME = 'mapa-alimentar-v1';
+// Service Worker for Mapa Alimentar PWA (Supports GitHub Pages subpaths)
+const CACHE_NAME = 'mapa-alimentar-v3';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.svg',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -29,23 +32,19 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Navigation fallback & cache first for static, network first for others
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => {
-        return caches.match('/index.html');
-      })
+      fetch(event.request).catch(() => caches.match('./index.html'))
     );
     return;
   }
 
   event.respondWith(
     caches.match(event.request).then((response) => {
-      return response || fetch(event.request).then((fetchRes) => {
-        return fetchRes;
+      return response || fetch(event.request).catch(() => {
+        // Return cached index.html or empty response on failure
+        return caches.match('./index.html');
       });
-    }).catch(() => {
-      // offline fallback
     })
   );
 });

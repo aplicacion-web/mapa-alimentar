@@ -33,9 +33,15 @@ if (fs.existsSync(distIndex)) {
   console.log('Updated root index.html with production build');
 }
 
-// 3. Copy 404.html to root
-const pub404 = path.join(rootDir, 'public', '404.html');
-const root404 = path.join(rootDir, '404.html');
-if (fs.existsSync(pub404)) {
-  fs.copyFileSync(pub404, root404);
+// 3. Copy PWA root assets from public to root (manifest.json, sw.js, icons, 404.html, favicon.svg)
+const publicDir = path.join(rootDir, 'public');
+const pwaFiles = ['manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png', 'favicon.svg', '404.html'];
+
+for (const file of pwaFiles) {
+  const src = path.join(publicDir, file);
+  const dest = path.join(rootDir, file);
+  if (fs.existsSync(src)) {
+    fs.copyFileSync(src, dest);
+    console.log(`Copied PWA asset ${file} to root`);
+  }
 }
