@@ -24,24 +24,26 @@ const rootIndex = path.join(rootDir, 'index.html');
 const devIndex = path.join(rootDir, 'index.dev.html');
 
 if (fs.existsSync(distIndex)) {
-  const currentRootIndex = fs.readFileSync(rootIndex, 'utf8');
-  if (currentRootIndex.includes('/src/main.tsx') && !fs.existsSync(devIndex)) {
-    fs.writeFileSync(devIndex, currentRootIndex, 'utf8');
-    console.log('Saved development template as index.dev.html');
-  }
-  fs.copyFileSync(distIndex, rootIndex);
-  console.log('Updated root index.html with production build');
+  let content = fs.readFileSync(distIndex, 'utf8');
+  // Ensure manifest points to ./manifest.json and sw.js points to ./sw.js
+  content = content.replace(/href="[^"]*manifest[^"]*"/g, 'href="./manifest.json"');
+  content = content.replace(/href="[^"]*icon-192[^"]*"/g, 'href="./icon-192.png"');
+  content = content.replace(/href="[^"]*favicon[^"]*"/g, 'href="./favicon.svg"');
+  fs.writeFileSync(rootIndex, content, 'utf8');
+  console.log('Updated root index.html with normalized PWA links');
 }
 
-// 3. Copy PWA root assets from public to root (manifest.json, sw.js, icons, 404.html, favicon.svg)
+// 3. Copy PWA root assets from public to root AND assets/ (manifest.json, sw.js, icons, 404.html, favicon.svg)
 const publicDir = path.join(rootDir, 'public');
 const pwaFiles = ['manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png', 'favicon.svg', '404.html'];
 
 for (const file of pwaFiles) {
   const src = path.join(publicDir, file);
-  const dest = path.join(rootDir, file);
+  const destRoot = path.join(rootDir, file);
+  const destAssets = path.join(rootAssetsDir, file);
   if (fs.existsSync(src)) {
-    fs.copyFileSync(src, dest);
-    console.log(`Copied PWA asset ${file} to root`);
+    fs.copyFileSync(src, destRoot);
+    fs.copyFileSync(src, destAssets);
+    console.log(`Copied PWA asset ${file} to root and assets/`);
   }
 }
