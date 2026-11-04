@@ -42,7 +42,7 @@ export const SettingsPage: React.FC = () => {
       <div>
         <h2 className="text-xl font-black text-slate-900 tracking-tight">Configuración y Privacidad</h2>
         <p className="text-slate-500">
-          Control absoluto de los datos familiares conforme a la regulación mexicana.
+          Control absoluto de los datos y privacidad familiar.
         </p>
       </div>
 
@@ -60,7 +60,7 @@ export const SettingsPage: React.FC = () => {
           </div>
           <div className="flex justify-between py-1 border-b border-slate-100">
             <span className="text-slate-500">Región e Idioma:</span>
-            <span className="font-semibold text-slate-800">México (es-MX)</span>
+            <span className="font-semibold text-slate-800">Español</span>
           </div>
           <div className="flex justify-between py-1">
             <span className="text-slate-500">Consentimiento:</span>

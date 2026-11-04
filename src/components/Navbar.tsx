@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useData } from '../context/DataContext';
-import { Settings, ShieldAlert, Heart } from 'lucide-react';
+import { Settings, ShieldAlert, Heart, Sparkles } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { child } = useData();
@@ -15,14 +15,14 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 py-3">
       <div className="max-w-md mx-auto flex items-center justify-between">
-        <Link to="/app/mapa" className="flex items-center gap-2 group">
+        <Link to="/app/rotina" className="flex items-center gap-2 group">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-white shadow-sm shadow-brand-500/20">
             <Heart className="w-4 h-4 fill-white/80" />
           </div>
           <div>
             <h1 className="text-sm font-bold text-slate-900 leading-tight">Mapa Alimentar</h1>
             <p className="text-[10px] font-semibold text-brand-600 uppercase tracking-wider flex items-center gap-1">
-              <span>🇲🇽 México</span>
+              <span>🌱 Menú saludable</span>
               <span>·</span>
               <span className="text-slate-500">{child.nickname || 'Mi hijo/a'}</span>
             </p>

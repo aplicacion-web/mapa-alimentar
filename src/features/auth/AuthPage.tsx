@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Heart, Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Heart, Lock, Mail, ArrowRight, ShieldCheck, Download } from 'lucide-react';
 import { InstallAppButton } from '../../components/InstallAppButton';
 
 export const AuthPage: React.FC = () => {
@@ -49,7 +49,15 @@ export const AuthPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center px-4 py-8">
-      <div className="max-w-md w-full mx-auto space-y-6">
+      <div className="max-w-md w-full mx-auto space-y-5">
+        {/* Top Install Shortcut Header */}
+        <div className="flex items-center justify-between bg-white px-3.5 py-2 rounded-2xl border border-slate-200/80 shadow-xs">
+          <span className="text-[11px] font-bold text-slate-600 flex items-center gap-1.5">
+            <span>📲</span> ¿Usas en celular o PC?
+          </span>
+          <InstallAppButton compact />
+        </div>
+
         {/* Brand */}
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center gap-2">
@@ -104,7 +112,7 @@ export const AuthPage: React.FC = () => {
                 <input
                   type="email"
                   required
-                  placeholder="ejemplo@correo.mx"
+                  placeholder="ejemplo@correo.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none text-slate-800 transition-all"
@@ -138,7 +146,7 @@ export const AuthPage: React.FC = () => {
                     className="mt-0.5 rounded text-brand-600 focus:ring-brand-400 border-slate-300"
                   />
                   <span className="text-[11px] text-slate-600 leading-snug">
-                    Acepto el <strong className="text-slate-800">consentimiento informado</strong> y las políticas de privacidad de datos familiares para México. Entiendo que la herramienta no emite diagnósticos médicos.
+                    Acepto el <strong className="text-slate-800">consentimiento informado</strong> y las políticas de privacidad de datos familiares. Entiendo que la herramienta no emite diagnósticos médicos.
                   </span>
                 </label>
               </div>
@@ -159,8 +167,8 @@ export const AuthPage: React.FC = () => {
             <button
               type="button"
               onClick={async () => {
-                await login('mama.demo@mapaalimentar.mx', 'Mamá de Sofía');
-                navigate('/app/mapa');
+                await login('mama.demo@mapaalimentar.app', 'Mamá de Sofía');
+                navigate('/app/rotina');
               }}
               className="text-xs text-brand-700 hover:text-brand-800 font-semibold underline"
             >

@@ -22,7 +22,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.4,
       carbsGrams: 28.2,
       fatGrams: 0.3,
-      sourceName: 'Base de Datos de Alimentos (México)'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -45,7 +45,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.8,
       carbsGrams: 27.5,
       fatGrams: 2.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -68,13 +68,13 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 6.3,
       carbsGrams: 45.1,
       fatGrams: 2.9,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
     id: 'f-sopa-fideo',
     slug: 'sopa-fideo-caldito',
-    nameEsMx: 'Sopa de fideo mexicana (caldosa)',
+    nameEsMx: 'Sopa de fideo casera (caldosa)',
     category: 'cereales',
     textureTags: ['blando', 'resbaloso', 'caldoso'],
     colorTags: ['rojo claro', 'dorado'],
@@ -91,7 +91,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.2,
       carbsGrams: 22.0,
       fatGrams: 2.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -114,7 +114,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 7.5,
       carbsGrams: 72.0,
       fatGrams: 5.2,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -137,7 +137,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 2.7,
       carbsGrams: 55.4,
       fatGrams: 1.8,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -160,7 +160,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.7,
       carbsGrams: 12.0,
       fatGrams: 1.5,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
 
@@ -185,7 +185,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.0,
       carbsGrams: 0.0,
       fatGrams: 3.6,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -208,7 +208,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.0,
       carbsGrams: 0.0,
       fatGrams: 7.2,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -231,7 +231,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.0,
       carbsGrams: 12.0,
       fatGrams: 6.5,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -254,7 +254,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.0,
       carbsGrams: 1.1,
       fatGrams: 10.6,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -277,7 +277,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.2,
       carbsGrams: 8.5,
       fatGrams: 9.0,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -300,7 +300,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.0,
       carbsGrams: 3.5,
       fatGrams: 17.5,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -323,7 +323,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.0,
       carbsGrams: 2.1,
       fatGrams: 25.0,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
 
@@ -348,7 +348,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 5.5,
       carbsGrams: 17.8,
       fatGrams: 2.2,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -371,7 +371,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 6.0,
       carbsGrams: 16.5,
       fatGrams: 0.6,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
 
@@ -396,7 +396,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 2.8,
       carbsGrams: 8.2,
       fatGrams: 0.2,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -419,7 +419,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.8,
       carbsGrams: 20.1,
       fatGrams: 0.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -442,13 +442,13 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 6.7,
       carbsGrams: 8.5,
       fatGrams: 14.7,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
     id: 'f-calabacita-suave',
     slug: 'calabacita-cocida-rodajas',
-    nameEsMx: 'Calabacita tierna mexicana',
+    nameEsMx: 'Calabacita tierna',
     category: 'verduras',
     textureTags: ['blando', 'húmedo', 'resbaloso'],
     colorTags: ['verde claro', 'blanco'],
@@ -465,13 +465,13 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.1,
       carbsGrams: 3.1,
       fatGrams: 0.3,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
     id: 'f-chayote-cubos',
     slug: 'chayote-cocido-cubitos',
-    nameEsMx: 'Chayote mexicano tierno',
+    nameEsMx: 'Chayote tierno',
     category: 'verduras',
     textureTags: ['blando', 'acuoso', 'liso'],
     colorTags: ['verde muy claro', 'blanco'],
@@ -488,7 +488,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.7,
       carbsGrams: 4.5,
       fatGrams: 0.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -511,7 +511,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 4.9,
       carbsGrams: 8.8,
       fatGrams: 0.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -534,7 +534,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.5,
       carbsGrams: 3.6,
       fatGrams: 0.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
 
@@ -559,7 +559,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 2.4,
       carbsGrams: 13.8,
       fatGrams: 0.2,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -582,7 +582,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 2.6,
       carbsGrams: 22.8,
       fatGrams: 0.3,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -605,7 +605,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 1.7,
       carbsGrams: 10.8,
       fatGrams: 0.3,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -628,7 +628,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 3.1,
       carbsGrams: 15.2,
       fatGrams: 0.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   },
   {
@@ -651,7 +651,7 @@ export const MEXICAN_FOODS_CATALOG: FoodItem[] = [
       fiberGrams: 0.9,
       carbsGrams: 9.1,
       fatGrams: 0.1,
-      sourceName: 'INCMNSZ México'
+      sourceName: 'Tabla Nutricional'
     }
   }
 ];
@@ -662,7 +662,7 @@ export const MEXICAN_PREPARED_DISHES: PreparedDishPreset[] = [
   {
     id: 'dish-comida-tradicional',
     slot: 'comida',
-    title: 'Plato Tradicional Mexicano Completo',
+    title: 'Plato Casero Completo Balanceado',
     description: 'Arroz rojo + Frijoles de la olla + Pechuga a la plancha + Bastones de zanahoria',
     items: [
       { foodId: 'f-arroz-rojo', role: 'cereal', preparation: 'Guisado suave con jitomate colado' },
@@ -711,7 +711,7 @@ export const MEXICAN_PREPARED_DISHES: PreparedDishPreset[] = [
   {
     id: 'dish-desayuno-huevo-frijol',
     slot: 'desayuno',
-    title: 'Desayuno Clásico Mexicano',
+    title: 'Desayuno Casero Completo',
     description: 'Huevo revuelto tierno + Frijoles negros refritos + Tortilla de maíz',
     items: [
       { foodId: 'f-huevo-revuelto', role: 'proteína', preparation: 'Revuelto tierno bien cocido' },

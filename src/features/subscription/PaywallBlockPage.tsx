@@ -81,13 +81,13 @@ export const PaywallBlockPage: React.FC = () => {
           {/* Pricing & Benefits */}
           <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2 text-xs">
             <div className="flex items-baseline justify-between">
-              <span className="font-bold text-slate-700">Renovación Mensual (México):</span>
+              <span className="font-bold text-slate-700">Renovación Mensual:</span>
               <span className="text-base font-black text-slate-900">MX$ 199 <span className="text-[10px] text-slate-400 font-normal">/ 30 días</span></span>
             </div>
             <ul className="text-[11px] text-slate-600 space-y-1 pt-1 border-t border-slate-200/60">
               <li className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3 h-3 text-brand-600 shrink-0" />
-                <span>Cardápio semanal automático y platos típicos mexicanos</span>
+                <span>Cardápio semanal automático y platos balanceados</span>
               </li>
               <li className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3 h-3 text-brand-600 shrink-0" />

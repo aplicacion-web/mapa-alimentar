@@ -34,7 +34,7 @@ export const LandingPage: React.FC = () => {
       <main className="max-w-md mx-auto px-4 pt-8 pb-16 space-y-8">
         <div className="text-center space-y-3">
           <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-brand-700 bg-brand-100/70 border border-brand-200/60 px-3 py-1 rounded-full uppercase tracking-wider">
-            <span>🇲🇽</span> Diseñado para familias en México
+            <span>🌱</span> Diseñado con amor para tu familia
           </span>
           <h1 className="text-2xl xs:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Ampliando el repertorio de tu hijo, paso a paso y <span className="text-brand-600">sin batallas</span>
@@ -174,7 +174,7 @@ export const LandingPage: React.FC = () => {
           <div className="space-y-2 text-xs text-slate-200 pt-2 border-t border-slate-700">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-teal-400 shrink-0" />
-              <span>Catálogo completo de alimentos tradicionales mexicanos</span>
+              <span>Catálogo completo de alimentos caseros y nutritivos</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-teal-400 shrink-0" />

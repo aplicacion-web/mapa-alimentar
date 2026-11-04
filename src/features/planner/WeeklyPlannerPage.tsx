@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
-import { MealPlanEntry, MealSlot, FoodItem, MealPlateItem, PreparedDishPreset } from '../../data/types';
+import { MealPlanEntry, MealSlot, FoodItem, MealPlateItem, PreparedDishPreset, MealConsumedLevel, DayOfWeek } from '../../data/types';
 import { calculateAlternatives } from '../../lib/alternativesEngine';
 import { 
   Calendar, 
@@ -13,12 +13,13 @@ import {
   ShieldCheck, 
   UtensilsCrossed,
   ChefHat,
-  Info
+  Info,
+  TrendingUp,
+  CheckCircle2
 } from 'lucide-react';
 import { SensoryTags } from '../../components/SensoryTags';
 import { DisclaimerBanner } from '../../components/DisclaimerBanner';
-
-type DayOfWeek = MealPlanEntry['dayOfWeek'];
+import { InstallAppButton } from '../../components/InstallAppButton';
 
 export const WeeklyPlannerPage: React.FC = () => {
   const { 
@@ -28,6 +29,8 @@ export const WeeklyPlannerPage: React.FC = () => {
     replaceMealPlateItem,
     replaceEntireDish,
     generateWeeklyPlanAutomatically, 
+    logMealConsumption,
+    getMealConsumption,
     child 
   } = useData();
 
@@ -63,12 +66,22 @@ export const WeeklyPlannerPage: React.FC = () => {
 
   const handleGeneratePlan = () => {
     generateWeeklyPlanAutomatically();
-    triggerFeedback('¡Cardápio semanal mexicano generado automáticamente!');
+    triggerFeedback('¡Cardápio semanal generado automáticamente con éxito!');
   };
 
   const triggerFeedback = (msg: string) => {
     setSavedFeedback(msg);
     setTimeout(() => setSavedFeedback(null), 3000);
+  };
+
+  const handleLogConsumption = (slot: MealSlot, level: MealConsumedLevel) => {
+    logMealConsumption(selectedDay, slot, level);
+    const textMap: Record<MealConsumedLevel, string> = {
+      full: '¡Excelente! Comida registrada como completada ✅',
+      partial: 'Comida registrada: comió una parte 🟡',
+      skipped: 'Registrado: no comió esta vez ⚪ (respetado)'
+    };
+    triggerFeedback(textMap[level]);
   };
 
   const dayEntries = mealPlan.filter(mp => mp.dayOfWeek === selectedDay);
@@ -123,7 +136,7 @@ export const WeeklyPlannerPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-teal-300">
-              🇲🇽 Cardápio Semanal Mexicano
+              📅 Cardápio Semanal Familiar
             </span>
             <h2 className="text-xl font-black tracking-tight leading-tight">
               Platos Completos para {child.nickname}
@@ -140,17 +153,23 @@ export const WeeklyPlannerPage: React.FC = () => {
           className="w-full bg-teal-400 hover:bg-teal-300 active:scale-[0.99] text-slate-950 font-black py-3 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg transition-all text-xs"
         >
           <Sparkles className="w-4 h-4 text-slate-950 fill-slate-950" />
-          <span>✨ Generar menú de la semana con platos típicos</span>
+          <span>✨ Generar menú de la semana con platos caseros</span>
         </button>
 
-        {/* Shortcut to add/manage foods */}
+        {/* Shortcuts */}
         <div className="pt-1 flex items-center justify-between text-[11px] text-teal-200">
-          <span>¿Olvidaste algún alimento?</span>
+          <Link
+            to="/app/perfil"
+            className="text-teal-100 hover:text-white font-bold flex items-center gap-1"
+          >
+            <TrendingUp className="w-3.5 h-3.5 text-teal-300" />
+            <span>Ver gráfico de nutrientes</span>
+          </Link>
           <Link
             to="/app/mapa"
             className="text-white hover:text-teal-200 font-bold underline flex items-center gap-1"
           >
-            <span>+ Agregar alimentos que come</span>
+            <span>+ Agregar alimentos</span>
           </Link>
         </div>
       </div>
@@ -274,13 +293,13 @@ export const WeeklyPlannerPage: React.FC = () => {
             <div className="flex items-start justify-between border-b border-slate-100 pb-3">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-teal-600">
-                  Pratos Prontos Mexicanos
+                  Platos Caseros Sugeridos
                 </span>
                 <h3 className="text-base font-black text-slate-900">
                   Cambiar plato completo
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Elige una combinación tradicional ya equilibrada:
+                  Elige una combinación casera ya equilibrada:
                 </p>
               </div>
               <button
@@ -332,11 +351,12 @@ export const WeeklyPlannerPage: React.FC = () => {
       <div className="space-y-4">
         {slots.map((s) => {
           const slotEntry = dayEntries.find(item => item.slot === s.key);
+          const currentConsumption = getMealConsumption(selectedDay, s.key);
 
           return (
             <div
               key={s.key}
-              className="bg-white rounded-3xl p-4 border border-slate-200/90 shadow-sm space-y-3"
+              className="bg-white rounded-3xl p-4 border border-slate-200/90 shadow-sm space-y-3.5"
             >
               {/* Slot Header */}
               <div className="flex items-center justify-between border-b border-slate-100 pb-2">
@@ -438,6 +458,58 @@ export const WeeklyPlannerPage: React.FC = () => {
                   </button>
                 </div>
               )}
+
+              {/* Registro de se comeu a refeição (Alimenta o gráfico de evolução do perfil) */}
+              <div className="pt-2.5 border-t border-slate-100 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-black text-slate-700 flex items-center gap-1.5">
+                    <span>🍽️</span> ¿{child.nickname || 'Tu hijo'} comió esta comida?
+                  </span>
+                  {currentConsumption && (
+                    <span className="text-[10px] font-extrabold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">
+                      {currentConsumption === 'full' && '✨ Comió todo'}
+                      {currentConsumption === 'partial' && '🟡 Comió parte'}
+                      {currentConsumption === 'skipped' && '⚪ No comió'}
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-3 gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => handleLogConsumption(s.key, 'full')}
+                    className={`py-2 px-2 rounded-xl text-[11px] font-extrabold flex items-center justify-center gap-1 transition-all ${
+                      currentConsumption === 'full'
+                        ? 'bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-300'
+                        : 'bg-slate-50 hover:bg-emerald-50 text-slate-700 border border-slate-200'
+                    }`}
+                  >
+                    <span>✅</span> Comió todo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleLogConsumption(s.key, 'partial')}
+                    className={`py-2 px-2 rounded-xl text-[11px] font-extrabold flex items-center justify-center gap-1 transition-all ${
+                      currentConsumption === 'partial'
+                        ? 'bg-amber-500 text-white shadow-sm ring-2 ring-amber-300'
+                        : 'bg-slate-50 hover:bg-amber-50 text-slate-700 border border-slate-200'
+                    }`}
+                  >
+                    <span>🟡</span> Parte
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleLogConsumption(s.key, 'skipped')}
+                    className={`py-2 px-2 rounded-xl text-[11px] font-extrabold flex items-center justify-center gap-1 transition-all ${
+                      currentConsumption === 'skipped'
+                        ? 'bg-slate-700 text-white shadow-sm ring-2 ring-slate-400'
+                        : 'bg-slate-50 hover:bg-rose-50 text-slate-700 border border-slate-200'
+                    }`}
+                  >
+                    <span>⚪</span> No comió
+                  </button>
+                </div>
+              </div>
             </div>
           );
         })}
@@ -449,11 +521,12 @@ export const WeeklyPlannerPage: React.FC = () => {
         <div className="space-y-0.5">
           <p className="font-bold text-slate-900">Estructura del plato combinado</p>
           <p className="text-[11px] text-slate-600 leading-relaxed">
-            Cada almuerzo típico incluye <strong>Cereal</strong> (ej. arroz), <strong>Leguminosa</strong> (frijoles), <strong>Proteína</strong> (pollo o res) y <strong>Verdura</strong> (zanahoria o chayote). Si no tienes algún ingrediente ese día en casa, toca <strong>Sustituir</strong> para encontrar una alternativa parecida sin alterar la tranquilidad del niño.
+            Cada almuerzo familiar incluye <strong>Cereal</strong> (ej. arroz), <strong>Leguminosa</strong> (frijoles), <strong>Proteína</strong> (pollo o huevo) y <strong>Verdura</strong> (zanahoria o calabacita). Si no tienes algún ingrediente en casa, toca <strong>Sustituir</strong> para encontrar una alternativa parecida sin alterar la tranquilidad del niño.
           </p>
         </div>
       </div>
 
+      <InstallAppButton compact />
       <DisclaimerBanner compact />
     </div>
   );

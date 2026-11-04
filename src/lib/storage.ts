@@ -25,7 +25,8 @@ const STORAGE_KEYS = {
   MEAL_PLAN: 'mapa_meal_plan',
   EXPERIENCES: 'mapa_food_experiences',
   ONBOARDING_DONE: 'mapa_onboarding_completed',
-  CUSTOM_FOODS: 'mapa_custom_foods'
+  CUSTOM_FOODS: 'mapa_custom_foods',
+  MEAL_LOGS: 'mapa_meal_logs'
 };
 
 const INITIAL_DEMO_CHILD: ChildProfile = {
@@ -68,7 +69,7 @@ const INITIAL_DEMO_MEAL_PLAN: MealPlanEntry[] = [
     childId: 'child-sofia',
     dayOfWeek: 'lunes',
     slot: 'desayuno',
-    mealTitle: 'Desayuno Clásico Mexicano',
+    mealTitle: 'Desayuno Casero Nutritivo',
     items: [
       { id: 'i-1', foodId: 'f-huevo-revuelto', role: 'proteína', preparation: 'Revuelto tierno bien cocido', isSafe: true, isTest: false },
       { id: 'i-2', foodId: 'f-frijol-refrito', role: 'leguminosa', preparation: 'Colados y refritos tersos', isSafe: true, isTest: false },
@@ -218,6 +219,28 @@ export const LocalStore = {
   },
   setCustomFoods(foods: FoodItem[]) {
     localStorage.setItem(STORAGE_KEYS.CUSTOM_FOODS, JSON.stringify(foods));
+  },
+
+  getMealLogs(): Record<string, string> {
+    const raw = localStorage.getItem(STORAGE_KEYS.MEAL_LOGS);
+    if (!raw) {
+      return {
+        'lunes-desayuno': 'full',
+        'lunes-comida': 'full',
+        'lunes-colacion': 'partial',
+        'lunes-cena': 'full',
+        'martes-desayuno': 'full',
+        'martes-comida': 'partial'
+      };
+    }
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return {};
+    }
+  },
+  setMealLogs(logs: Record<string, string>) {
+    localStorage.setItem(STORAGE_KEYS.MEAL_LOGS, JSON.stringify(logs));
   },
 
   clearAllData() {

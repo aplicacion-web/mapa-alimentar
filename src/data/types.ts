@@ -8,22 +8,28 @@ export type MealSlot = 'desayuno' | 'comida' | 'cena' | 'colacion';
 
 export type FoodRole = 'cereal' | 'leguminosa' | 'proteína' | 'verdura' | 'fruta' | 'lácteo' | 'otro';
 
+export type DayOfWeek = 'lunes' | 'martes' | 'miércoles' | 'jueves' | 'viernes' | 'sábado' | 'domingo';
+export type MealConsumedLevel = 'full' | 'partial' | 'skipped';
+
 export interface ChildProfile {
   id: string;
-  ownerId: string;
+  ownerId?: string;
   nickname: string;
   ageBand: AgeBand;
   knownAllergies: string[];
   notes?: string;
-  createdAt: string;
+  createdAt?: string;
+  onboardingCompleted?: boolean;
 }
 
 export interface SensoryPreferences {
-  childId: string;
+  childId?: string;
   preferredTextures: string[];
+  avoidedTextures?: string[];
   preferredColors: string[];
-  preferredTemperatures: string[];
-  preferredForms: string[];
+  avoidedColors?: string[];
+  preferredTemperatures?: string[];
+  preferredForms?: string[];
   avoidedSensoryAttributes: string[];
 }
 
@@ -44,9 +50,12 @@ export interface FoodItem {
     basisGrams: number;
     energyKcal?: number;
     proteinGrams?: number;
+    proteinG?: number;
     fiberGrams?: number;
+    fiberG?: number;
     carbsGrams?: number;
     fatGrams?: number;
+    sodiumMg?: number;
     sourceName: string;
   };
   notes?: string;
@@ -71,15 +80,62 @@ export interface MealPlateItem {
   isTest: boolean; // Alimento novo em teste
 }
 
+export interface MealLogEntry {
+  dayOfWeek: DayOfWeek;
+  slot: MealSlot;
+  level: MealConsumedLevel;
+  timestamp: string;
+}
+
+// Resumo semanal para o gráfico lúdico e intuitivo de evolução nutricional
+export interface NutrientGroupStatus {
+  key: string;
+  name: string;
+  icon: string;
+  score: number; // 0 a 100
+  level: 'excelente' | 'adecuado' | 'reforzar';
+  badgeLabel: string;
+  colorClass: string;
+  barColor: string;
+  description: string;
+  tip: string;
+}
+
+export interface DayProgress {
+  day: DayOfWeek;
+  label: string;
+  shortLabel: string;
+  fullCount: number;
+  partialCount: number;
+  skippedCount: number;
+  totalLogged: number;
+  scorePct: number; // 0 a 100
+}
+
+export interface WeeklyNutritionSummary {
+  completionPercentage: number;
+  totalMealsLogged: number;
+  fullyEatenMeals: number;
+  partialMeals: number;
+  skippedMeals: number;
+  days: DayProgress[];
+  nutrients: NutrientGroupStatus[];
+  newFoodsCount: number;
+  newFoodsList: string[];
+  headline: string;
+  summaryFeedback: string;
+}
+
 // Representa a refeição completa do horário (ex: Almoço / Comida com arroz, feijão, frango e cenoura)
 export interface MealPlanEntry {
   id: string;
   childId: string;
-  dayOfWeek: 'lunes' | 'martes' | 'miércoles' | 'jueves' | 'viernes' | 'sábado' | 'domingo';
+  dayOfWeek: DayOfWeek;
   slot: MealSlot;
-  mealTitle: string; // Ex: "Comida Tradicional Mexicana (Arroz, Frijoles, Pollo y Verdura)"
+  mealTitle: string;
   items: MealPlateItem[];
   notes?: string;
+  consumedLevel?: MealConsumedLevel;
 }
 
 export interface PreparedDishPreset {
