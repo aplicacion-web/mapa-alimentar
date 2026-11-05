@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Mapa Alimentar · Guía sensorial de repertorio alimentario</title>
     
     <!-- PWA & Mobile Meta Tags -->
@@ -18,16 +21,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-DyKqtJGC.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-rUu71e9Q.css">
+    <script type="module" crossorigin src="./assets/index-DHrN0LS0.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BEiWFj_D.css">
   </head>
   <body class="bg-slate-50 text-slate-800 antialiased font-['Plus_Jakarta_Sans',sans-serif] selection:bg-brand-100 selection:text-brand-900">
     <div id="root"></div>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js', { scope: './' })
-            .then((reg) => console.log('PWA Service Worker registered successfully:', reg.scope))
+          navigator.serviceWorker.register('./sw.js?v=5', { scope: './' })
+            .then((reg) => {
+              console.log('PWA Service Worker registered:', reg.scope);
+              // Force check for updates on each load
+              reg.update();
+              reg.onupdatefound = () => {
+                const installingWorker = reg.installing;
+                if (installingWorker) {
+                  installingWorker.onstatechange = () => {
+                    if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      console.log('Nueva versión disponible, recargando...');
+                      window.location.reload();
+                    }
+                  };
+                }
+              };
+            })
             .catch((err) => console.log('SW registration note:', err));
         });
       }
